@@ -13,6 +13,9 @@ public class FileExample{
         }
 
         while(myScanner.hasNextLine()){
+            /* Structure of database, and data types are tightly coupled to database application.
+            i.e. position 1 in the file (database) is name, and it has a data type of String..
+             */
             String[] data = myScanner.nextLine().split(",");
             String name = data[0];
             int age = Integer.parseInt(data[1]);
