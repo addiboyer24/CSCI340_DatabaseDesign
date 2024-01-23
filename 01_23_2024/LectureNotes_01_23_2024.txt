@@ -1,0 +1,142 @@
+1.1
+traditional database applications, in which most of the information that is stored and accessed is either
+textual or numeric.
+
+General Definition of a Database:
+A database is a collection of related data.1 By data, we mean known facts that can
+be recorded and that have implicit meaning. 
+
+ A database has the following implicit properties:
+A database represents some aspect of the real world, sometimes called the
+miniworld or the universe of discourse (UoD). Changes to the miniworld
+are reflected in the database.
+■ A database is a logically coherent collection of data with some inherent
+meaning. A random assortment of data cannot correctly be referred to as a
+database.
+■ A database is designed, built, and populated with data for a specific purpose.
+It has an intended group of users and some preconceived applications in
+which these users are interested.
+
+In other words, a database has some source from which data is derived, some degree
+of interaction with events in the real world, and an audience that is actively inter-
+ested in its contents.
+
+A database can be of any size and complexity.
+Sometimes a web application may use many databases for example Amazon.com.
+
+Generated and maintained manually, or it may be computerized.
+
+A database management system (DBMS) is a computerized system that enables
+users to create and maintain a database. The DBMS is a general-purpose software
+system that facilitates the processes of defining, constructing, manipulating, and
+sharing databases among various users and applications.
+
+Facilitates the process of...
+(DCMS)
+
+Defining a database
+involves specifying the data types, structures, and constraints of the data to be
+stored in the database. The database definition or descriptive information is also
+stored by the DBMS in the form of a database catalog or dictionary; it is called
+meta-data.
+
+Constructing the database is the process of storing the data on some
+storage medium that is controlled by the DBMS.
+
+ Manipulating a database includes
+functions such as querying the database to retrieve specific data, updating the data-
+base to reflect changes in the miniworld, and generating reports from the data.
+
+Sharing a database allows multiple users and programs to access the database
+simultaneously.
+
+Other important functions of a DBMS..
+Protection.
+
+Maintainence.
+
+Together the database and DBMS is the database system.
+
+1.2
+data - 
+file
+data elements (within file)
+data types (of data elements)
+
+Most medium-size and large databases include many types of
+records and have many relationships among the records.
+
+Database manipulation involves querying and updating. Examples of queries are as
+
+Progression of Database Design:
+Requirements specification and
+analysis.
+
+Conceptual design
+
+Logical design
+
+Physical design
+
+1.3
+Database Approach vs. File Approach.
+
+In general downside is each user has their own file, and that is maintained separately by different software applications (leads to unnecessary redundancy).
+
+■ Self-describing nature of a database system
+■ Insulation between programs and data, and data abstraction
+■ Support of multiple views of the data
+■ Sharing of data and multiuser transaction processing
+
+
+■ Self-describing nature of a database system
+
+Database Approach:
+meta-data - information stored in the database catalog about where the data is stored, what types of data, and constraints on the data.
+
+File Approach:
+In traditional file processing, data definition is typically part of the application pro-
+grams themselves. Constructed to work with only one specific database (see FileExample.java, FileExample.txt, etc..).
+
+
+■ Insulation between programs and data, and data abstraction
+
+File Approach:
+Generally changes to the underlying data require(s) changes in the database applications (see FileExample.java, FileExample.txt, etc.. with addition of Address field).
+
+Database Approach:
+The structure of data files is stored in the DBMS catalog separately from the access programs. We call this property program-data independence.
+
+An operation (also called a function or method) is specified in two
+parts. The interface (or signature) of an operation includes the operation name and
+the data types of its arguments (or parameters). The implementation (or method) of
+the operation is specified separately and can be changed without affecting the inter-
+face. User application programs can operate on the data by invoking these opera-
+tions through their names and arguments, regardless of how the operations are
+implemented. This may be termed program-operation independence.
+
+The characteristic that allows program-data independence and program-operation
+independence is called data abstraction.
+
+data model is a type of
+data abstraction that is used to provide this conceptual representation. The data
+model uses logical concepts, such as objects, their properties, and their interrela-
+tionships, that may be easier for most users to understand than computer storage
+concepts. Hence, the data model hides storage and implementation details that are
+not of interest to most database users.
+
+■ Support of multiple views of the data
+A database typically has many types of users, each of whom may require a different
+perspective or view of the database. 
+
+A view may be a subset of the database or it may
+contain virtual data that is derived from the database files but is not explicitly stored.
+
+■ Sharing of data and multiuser transaction processing
+concurrency
+control software to ensure that several users trying to update the same data
+do so in a controlled manner so that the result of the updates is correct (example: withdrawing money from a bank account).
+
+Properties of a transaction:
+isolation - each transaction appears to execute in isolation from other transactions (even though they may be happening simultaneously).
+atomicity - all the database operations are successful, or none are successful.
