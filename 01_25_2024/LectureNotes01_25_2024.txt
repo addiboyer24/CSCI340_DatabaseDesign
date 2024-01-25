@@ -1,0 +1,148 @@
+1.4
+Actors on the Scene - people whose jobs involve the day-to-day use
+of a large database
+
+Database Administrators (DBA's: Administering these resources)
+Database System - (Primary) Database, (Secondary) DBMS & related software
+Duties:
+Authorizing Access
+Coordinating and Monitoring it's use
+
+Example Problems:
+Security Breaches
+System Response Time (Performance)
+
+Assisted by a team in larger organizations (see roles below).
+
+Database Designers (you!)
+Duties:
+Identifying the data to be stored, choosing appropriate structures to represent and store the data.
+- Requirements gathering
+- Conceptual design
+- Logical design
+- Physical design
+
+Final database design must be capable of supporting the requirements of all user groups.
+
+End Users (Jobs require access to the database for querying, updating, and generating reports):
+- Causal: 
+
+- Naive: Usually access the database via standard types of queries and updates called canned transactions (carefully programmed and tested).
+via application interface (i.e. Mobile App -> Api -> Database).
+
+Sophisticated:
+familiarize themselves with the facilities of the database (engineers, scientists, bussiness analysts)
+
+Standalone users:
+personal databases, menu based or graphics based interfaces.
+
+System Analysts and Application Programmers:
+Determine requirements of end users and develop specifications (naive or parametric users).
+
+Application Programmers (software developers, or software engineers):
+Implement these specifications as programs; test, debug, document, and maintain.
+Should be familiar with the full range of capabilities provided by the DBMS.
+
+1.5
+Behind the Scenes:
+- DBMS system designers and implementers (the software engineers of the DBMS software).
+- Tool developers (facilitate database modeling and design, performance monitoring, GUI's, prototyping, simulation, and test data generation)
+- Running and maintainence of software and hardware required for the database system.
+
+1.6
+Advantages of DBMS approach:
+Controlling Redundancy:
+redundancy - storing the data multiple times leads to problems.
+- have to perform the single logical update multiple times (duplication of effort)
+- wasted storage space (more serious for larger databases)
+- inconsistent data (either doesn't happen, or happens incorrectly i.e. fat fingered)
+
+Solution: storing the same piece of data in the database (data normalization)
+
+controlled redundancy (improve performance): don't have to search multiple files to collect the data if it's commonly accessed together (there is cost of joining multiple files together).
+This is known as denormalization.
+The DBMS will help us to control the redundancy.
+
+Restricting Unauthorized Access:
+Security and authorization subsystem, DBA uses to create accounts and enforce restrictions.
+
+Provides Persistent Storage:
+Java class, one the program terminates the data values that were stored in memory disappear.
+
+Providing Storage Structures and Search
+Techniques for Efficient Query Processing
+efficiently executing queries and
+updates (SLA service level agreement)
+
+indexes - Auxillary files
+
+buffering and caching - maintains part of the main database in main memory buffers.
+query processing and optimization - think of this as the compiler (choses the correct execution plan for your query i.e. which indexes to use, when to use them, etc..)
+
+Providing Backup and Recovery:
+Ability to recover from software or hardware failures.
+for example (complex update transaction fails halfway through)
+Disk failure (Physical)
+
+Provides Multiple User Interfaces:
+GUI for medium users
+Query languages (SQL) - more advanced users
+
+Representing Complex Relationships among Data
+Does this in a way that reduces data redundancy, improves consistency, and performance.
+
+Enforcing Integrity Constraints:
+DBMS provides capabilities for defining and enforcing integrity constraints
+e.g. specifying a data type (i.e. int, string, etc..)
+
+referential integrity i.e. one record in this file must refer to at least one valid record in this other table.
+key constraint, uniqueness constraint - each record must be uniquely identifiable.
+
+bussiness rules - can't necessarily be enforced by the DBMS.
+
+inherent rules - rules that pertain to a specific data model.
+
+Permitting Inferencing and Actions
+Using Rules and Triggers
+
+More involved procedures to enforce rules are popularly called stored procedures.
+
+Additional Implications:
+Enforcing Standards:
+DBA's can enforce because databases are centralized over distributed file approach across users.
+
+Reduced Application Development Time:
+Don't have to go through defining the data model, relationships, etc.. each time, but can augment the existing model, and create application interfaces more easily.
+
+Flexibility:
+program - data independence.  DBMS supports many changes to the database without having to make changes to the data, or applications utilizing the data.
+
+Availability of Up to Date Information:
+DBMS makes database available to all users.  Essential for many transaction based systems.
+
+Scalability:
+Buy bigger, and higher performing servers and software instead of individual lower performance equipment.
+Reduces the overall cost of operation and management.
+
+1.7 (Omitted, read it if you're curious)
+
+1.8
+When not to use a DBMS:
+High overhead cost
+initial investment for hardware, sofware, and training
+generality that DBMS provides for defining and processing data
+overhead for providing security, concurrency control, recovery, and integrity functions
+
+When to use a file based system:
+Too simple
+Short timelines
+embedded systems with storage capacity limits
+single user systems
+
+Review:
+database - collection of related data (recorded facts)
+represents an aspect of the real world, used for a specific purpose, has one or more groups of users.
+
+DBMS - generalized software package for implementing and maintaining a computerized database.
+
+Database system - database + software (DBMS)
