@@ -1,4 +1,4 @@
-Lecture Notes Consolidated, Summarized.
+1Lecture Notes Consolidated, Summarized.
 01/22/2024:
 1. General Definition of a Database:
 
