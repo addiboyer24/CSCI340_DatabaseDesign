@@ -1,0 +1,151 @@
+Lecture Notes Consolidated, Summarized.
+01/22/2024:
+1. General Definition of a Database:
+
+    A database is a collection of related data representing some aspect of the real world.
+    Data are known facts with implicit meaning.
+    Implicit properties of a database include coherence, purpose, audience, and real-world interaction.
+
+2. Database Management System (DBMS):
+
+    A DBMS is computerized software facilitating database creation, maintenance, manipulation, and sharing.
+    Functions include defining, constructing, manipulating, and sharing databases.
+    Metadata stores descriptive information about the database.
+
+3. Data Elements and Types:
+
+    Databases consist of data files, data elements within files, and various data types.
+    Medium to large databases feature multiple record types and relationships among records.
+
+4. Progression of Database Design:
+
+    Design stages include requirements specification, conceptual design, logical design, and physical design.
+
+5. Database Approach vs. File Approach:
+
+    Database approach offers advantages such as self-description, insulation, multiple views, and data sharing.
+    File approach involves maintaining separate files for each user, leading to redundancy.
+    Database systems provide metadata, insulation between programs and data, and support for multiple views.
+
+6. Properties of Database Systems:
+
+    Database systems offer program-data independence, program-operation independence, and data abstraction.
+    Data models provide a conceptual representation that hides storage details.
+    Databases support multiple views and facilitate data sharing and multiuser transaction processing.
+    Transaction properties include isolation and atomicity to ensure data integrity.
+
+The notes provide a comprehensive overview of traditional database applications, their management, design principles, and the advantages of using a database approach over the file approach. These concepts are foundational in understanding how databases function and are managed in various applications.
+
+01/25/2024:
+1.4 Actors on the Scene:
+
+    Database Administrators (DBA's): Responsible for authorizing access and monitoring database use. Handle security breaches and system performance.
+    Database Designers: Identify data, choose structures, and design the database to support all user groups' requirements.
+    End Users: Causal, naive, sophisticated, or standalone users who access the database for querying, updating, and generating reports.
+    System Analysts and Application Programmers: Determine user requirements and develop specifications. Implement, test, debug, document, and maintain programs.
+
+1.5 Behind the Scenes:
+
+    DBMS System Designers and Implementers: Develop DBMS software.
+    Tool Developers: Create tools for database modeling, performance monitoring, GUIs, prototyping, simulation, and test data generation.
+    Maintenance Personnel: Responsible for running and maintaining database system software and hardware.
+
+1.6 Advantages of DBMS Approach:
+
+    Controlling Redundancy: DBMS helps control redundancy through normalization and denormalization.
+    Restricting Unauthorized Access: Security subsystems and authorization mechanisms prevent unauthorized access.
+    Providing Persistent Storage: Data is stored persistently even after program termination.
+    Efficient Query Processing: DBMS employs indexing, buffering, caching, and query optimization for efficient query processing.
+    Backup and Recovery: DBMS enables recovery from software or hardware failures.
+    Multiple User Interfaces: Supports GUIs and query languages like SQL for various user types.
+    Enforcing Integrity Constraints: DBMS enforces integrity constraints, referential integrity, key constraints, and business rules.
+    Permitting Inferencing and Actions: Rules, triggers, and stored procedures enable inferencing and actions.
+    Enforcing Standards: Centralized databases facilitate enforcing standards.
+    Reduced Application Development Time: DBMS reduces development time by providing a pre-defined data model and relationships.
+    Flexibility: Supports program-data independence and allows changes without altering data or applications.
+    Availability of Up-to-Date Information: Makes the database available to all users, crucial for transaction-based systems.
+    Scalability: Allows scaling by upgrading servers and software, reducing overall operational costs.
+
+1.8 When Not to Use a DBMS:
+
+    High overhead costs, especially for initial investment, training, and security functions.
+    File-based systems may be preferable for simple, single-user, or embedded systems with limited storage capacities.
+
+The lecture notes provide a comprehensive understanding of the roles, advantages, and considerations involved in traditional database applications, emphasizing the importance of database design, management, and system efficiency.
+
+01/30/2024:
+2.1 Moore's Law and Client-Server Architecture:
+
+    Moore's Law: Predicts that the number of transistors on a microchip doubles every two years, leading to exponential growth in data storage capacity.
+    Client-Server Architecture: Distributed architecture with client modules handling user interaction and server modules managing data storage, access, and search.
+
+Abstraction:
+
+    Data Abstraction: Suppresses details of data organization and storage, highlighting essential features for improved understanding.
+    Data Model: Collection of concepts describing the database structure, including data types, relationships, and constraints.
+    Stored Procedures: Persistent modules attached to relations in the relational data model.
+
+2.1.1 Types of Data Models:
+
+    Conceptual Data Models: Represent real-world objects, attributes, and relationships.
+    Representational Data Models: Closer to the way data is organized in computer storage, like the relational data model.
+    Physical Data Models: Describe data storage details such as record formats, orderings, and access paths.
+
+2.1.2 Database Schema and State:
+
+    Database Schema: Description of the database structure specified during database design.
+    Database State or Snapshot: Data in the database at a particular moment.
+    Schema Evolution: Changes to the schema as application requirements change.
+
+2.2 Three-Schema Architecture and Data Independence:
+
+    Three-Schema Architecture: Separates user applications from the physical database, defining internal, conceptual, and external schemas.
+    Mappings: Processes of transforming requests and results between schema levels.
+    Data Independence: Capacity to change the schema at one level without impacting the schema at the next higher level.
+    Logical Data Independence: Ability to change the conceptual schema without altering external schemas or application programs.
+    Physical Data Independence: Ability to modify the internal schema without changing the conceptual schema, and consequently, the external schemas.
+
+
+02/01/2024:
+2.3 Data Definition and Manipulation Languages (DDL and DML):
+
+    Data Definition Language (DDL): Used by DBAs and database designers to define schemas. Stored in the DBMS catalog.
+    Storage Definition Language (SDL): Specifies the internal schema, often controlled by DBA staff.
+    View Definition Language (VDL): Specifies user views and mappings to the conceptual schema.
+    Data Manipulation Language (DML):
+        Low-level or procedural DML operates on individual records using programming constructs.
+        High-level or set-oriented DML like SQL specifies and retrieves many records in a single statement.
+
+Interface Types:
+
+    Menu-based Interfaces: Web or browsing interfaces presenting users with options to formulate requests.
+    Apps for Mobile Devices: Interfaces designed specifically for mobile devices.
+    Forms-based Interfaces: Specifications allowing users to input data via forms.
+    Graphical User Interfaces (GUIs): Diagrammatic representations allowing users to manipulate data visually.
+    Natural Language Interfaces: Allows users to interact with the system using human language.
+    Speech Input and Output: Allows users to input commands and receive feedback through speech.
+    Interfaces for Parametric Users: Provide shortcuts and common functions for efficient data manipulation.
+    Interfaces for DBAs: Privileged commands for managing the database system.
+
+2.4 Query Processing:
+
+    Query Compiler: Parses and validates query syntax and identifies schema constructs.
+    Query Optimizer: Rearranges operations, eliminates redundancies, and optimizes search algorithms.
+    Precompiler: Extracts DML commands from host programming language applications.
+    Runtime Database Processor: Executes privileged commands, query plans, and canned transactions, interacts with the system catalog, and performs low-level I/O operations.
+
+2.5 Client-Server Architecture:
+
+    Client-Server Architecture: Clients provide user interfaces and local processing, connecting to servers for additional functionality.
+    Server: System providing services to clients, such as database access.
+    Two-Tier Architecture: Direct connection between client and server.
+    Three-Tier Architecture: Intermediate layer (application server) between client and database server, handling business logic and improving security.
+
+Classification of Database Management Systems:
+
+    Based on Data Model: Relational (SQL) and Object (NOSQL, key-value storage).
+    Based on Number of Users: Single user vs. multiuser systems.
+    Based on Distribution: Centralized vs. distributed systems.
+    Based on Cost: Open source vs. proprietary systems.
+
+The relational data model organizes databases into tables, where each table corresponds to a separate file.

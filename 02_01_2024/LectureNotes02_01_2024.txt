@@ -1,0 +1,165 @@
+2.3
+
+2.3.1
+data definition language (DDL) - is used by the DBA and by database designers to define both schemas. The
+DBMS will have a DDL compiler whose function is to process DDL statements in order to identify descriptions of the schema constructs and to store the schema description in the DBMS catalog.
+
+storage definition language (SDL) - is used to specify the internal
+schema. The mappings between the two schemas may be specified in either one of
+these languages. In most relational DBMSs today, there is no specific language that
+performs the role of SDL. Instead, the internal schema is specified by a combination
+of functions, parameters, and specifications related to storage of files. These permit
+the DBA staff to control indexing choices and mapping of data to storage.
+
+view definition language (VDL) - to specify user views and their mappings to the conceptual
+schema, but in most DBMSs the DDL is used to define both conceptual and external
+schemas. In relational DBMSs, SQL is used in the role of VDL to define user or
+application views as results of predefined queries.
+
+data manipulation language (DML) - Once the database schemas are compiled and the database is populated with data, users must have some means to manipulate the database. Typical manipulations
+include retrieval, insertion, deletion, and modification of the data.
+
+A low-level or procedural DML must be embedded in a general-purpose programming
+language. This type of DML typically retrieves individual records or objects from
+the database and processes each separately. Therefore, it needs to use programming
+language constructs, such as looping, to retrieve and process each record from a set
+of records. Low-level DMLs are also called record-at-a-time DMLs.
+
+set-at-a-time or set-oriented DMLs - High-level DMLs, such as SQL, can specify and retrieve many records in
+a single DML statement; which data to retrive as apposed to how - called declarative language.
+
+host language - Whenever DML commands, whether high level or low level, are embedded in a
+general-purpose programming language
+
+DML is called the data sublanguage.
+
+query language - a high-level DML used in a standalone interactive manner.
+
+Casual end users typically use a high-level query language to specify their requests,
+whereas programmers use the DML in its embedded form.
+
+2.3.2
+Menu-based Interfaces for Web Clients or Browsing. These interfaces pres-
+ent the user with lists of options (called menus) that lead the user through the for-
+mulation of a request. Menus do away with the need to memorize the specific
+commands and syntax of a query language; rather, the query is composed step-by-
+step by picking options from a menu that is displayed by the system. Pull-down
+menus are a very popular technique in Web-based user interfaces. They are also
+often used in browsing interfaces, which allow a user to look through the contents
+of a database in an exploratory and unstructured manner.
+
+Apps for Mobile Devices
+
+Forms-based Interfaces - 
+forms specification languages - 
+
+Graphical User Interfaces - 
+Shows a diagram of the data, allows you to manipulate it.
+
+Natural Language Interfaces - 
+ChatGpt, Cognitive Search, etc..
+
+Speech Input and Output - Similar to natural language interface with feedback to the user in form of speech as apposed to data representation.  IVR Systems (i.e. twilio).
+
+Interfaces for Parametric Users - hotkeys, common functions (i.e. bank teller).
+
+Interfaces for the DBA. Most database systems contain privileged commands
+that can be used only by the DBA staff. These include commands for creating
+accounts, setting system parameters, granting account authorization, changing a
+schema, and reorganizing the storage structures of a database.
+
+2.4
+
+query compiler -  queries are parsed and validated for correctness of the query syntax, the
+names of files and data elements, and so on.
+
+query optimizer - is
+concerned with the rearrangement and possible reordering of operations, elimina-
+tion of redundancies, and use of efficient search algorithms during execution.
+
+precompiler extracts DML commands
+from an application program written in a host programming language. 
+
+runtime database processor executes (1) the
+privileged commands, (2) the executable query plans, and (3) the canned transac-
+tions with runtime parameters. It works with the system catalog and may update it
+with statistics. It also works with the stored data manager, which in turn uses basic
+operating system services for carrying out low-level input/output (read/write)
+operations between the disk and main memory. 
+
+client computer running DBMS client software and the latter is
+called the database server. In many cases, the client accesses a middle computer,
+called the application server, which in turn accesses the database server.
+
+Client Server Architecture - A client in this framework is typically a user machine that pro-
+vides user interface capabilities and local processing. When a client requires access
+to additional functionality—such as database access—that does not exist at the cli-
+ent, it connects to a server that provides the needed functionality. 
+
+A server is a sys-
+tem containing both hardware and software that can provide services to the client
+machines, such as file access, printing, archiving, or database access
+2.5.3
+
+SQL server
+query and transac-
+tion functionality related to SQL processing remained on the server side. In
+such an architecture, the server is often called a query server or transaction
+server because it provides these two functionalities.
+
+Two Tier Architecture.
+Connectivity (ODBC) provides an application programming interface (API),
+which allows client-side programs to call the DBMS, as long as both client and
+server machines have the necessary software installed.
+
+Three Tier Architecture.
+This intermediate layer or middle tier is called the application server or the Web
+server, depending on the application. This server plays an intermediary role by
+running application programs and storing business rules (procedures or con-
+straints) that are used to access data from the database server. It can also improve
+database security by checking a client’s credentials before forwarding a request to
+the database server. Clients contain user interfaces and Web browsers. The inter-
+mediate server accepts requests from the client, processes the request and sends
+database queries and commands to the database server, and then acts as a conduit
+for passing (partially) processed data from the database server to the clients, where
+it may be processed further and filtered to be presented to the users. Thus, the user
+interface, application rules, and data access act as the three tiers. Figure 2.7(b) shows
+another view of the three-tier architecture used by database and other application
+package vendors. The presentation layer displays information to the user and allows
+data entry. The business logic layer handles intermediate rules and constraints before
+data is passed up to the user or down to the DBMS. The bottom layer includes all
+data management services. The middle layer can also act as a Web server, which
+retrieves query results from the database server and formats them into dynamic
+Web pages that are viewed by the Web browser at the client side. The client machine
+is typically a PC or mobile device connected to the Web.
+
+Classification of Database
+Management Systems
+
+determined by the data model on
+which the DBMS is based
+
+relational data model, and the systems based on this model are
+known as SQL systems. 
+
+object data model - key-value storage systems and NOSQL systems, use vari-
+ous data models: document-based, graph-based, column-based, and key-value
+data models. 
+
+also by the number of users
+Single user systems
+Multiuser system
+
+Third the number of sites the database is distributed
+centralized - single site
+distributed - multiple sites
+
+Homogeneous - same dbms software at each site.
+Heterogeneous - different dbms software at each site.
+
+fourth - cost
+Open source (free)
+Proprietary (cost money)
+
+ The relational data model represents a database as a collection of tables,
+where each table can be stored as a separate file. 
