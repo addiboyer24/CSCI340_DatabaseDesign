@@ -1,0 +1,81 @@
+3.5 Weak Entity Types
+
+weak entity types - Entity types that do not have key attributes of their own.
+
+regular entity types (strong entity types) - do have a key attribute.
+
+- How are weak entity types identified then?
+Entities belonging to a weak entity
+type are identified by being related to specific entities from another entity type in com-
+bination with one of their attribute values.
+
+called the..
+Identifying or owner entity type.
+
+Identifying relationship
+relationship type that relates a weak entity type to it's owner.
+
+*Always has a total participation constraint (existence dependency) with respect to it's identifying relationship (can't be identified without an owner entity type).
+
+Not every existence dependency results in a weak entity type*
+
+Example:
+Drivers license doesn't exist without a person (existence dependency), but is itself a strong entity type (as it has it's own key).
+
+partial key - the attribute that can
+uniquely identify weak entities that are related to the same owner entity.
+
+- Representing in an ER Diagram?
+In ER diagrams, both a weak entity type and its identifying relationship are distin-
+guished by surrounding their boxes and diamonds with double lines (see Fig-
+ure 3.2). The partial key attribute is underlined with a dashed or dotted line.
+
+3.7.2 Proper Naming of Schema Constructs
+
+One should choose names that convey, as much as possible, the meanings attached to
+the different constructs in the schema.
+
+Singular names for entity types, rather than plural ones, as entity type name applies to each individual entity belonging to that entity type.
+
+Entity Type and Relationship Type names - all caps (uppercase).
+
+Attribute names - initial letter capitalized.
+
+Role names - lowercase letters.
+
+From a general perspective:
+nouns appearing in the narrative tend to give rise to entity type names, and the
+verbs tend to indicate names of relationship types. Attribute names generally arise
+from additional nouns that describe the nouns corresponding to entity types.
+
+Binary relationship names - make the ER diagram of the schema readable from left to right and from top to bot-
+tom.
+
+3.7.3 - Design Choices for ER Conceptual Design
+
+- Iterative refinement process
+examples:
+- A concept may be first modeled as an attribute and then refined into a rela-
+tionship because it is determined that the attribute is a reference to another
+entity type. It is often the case that a pair of such attributes that are inverses of
+one another are refined into a binary relationship.
+
+- Similarly, an attribute that exists in several entity types may be elevated or
+promoted to an independent entity type. For example, suppose that each
+of several entity types in a UNIVERSITY database, such as STUDENT,
+INSTRUCTOR, and COURSE, has an attribute Department in the
+initial design; the designer may then choose to create an entity type
+DEPARTMENT with a single attribute Dept_name and relate it to the three
+entity types (STUDENT, INSTRUCTOR, and COURSE) via appropriate rela-
+tionships. Other attributes/relationships of DEPARTMENT may be discov-
+ered later.
+
+- An inverse refinement to the previous case may be applied—for example, if
+an entity type DEPARTMENT exists in the initial design with a single attribute
+Dept_name and is related to only one other entity type, STUDENT. In
+this case, DEPARTMENT may be reduced or demoted to an attribute of
+STUDENT.
+
+Java Spring Resources:
+https://www.codecademy.com/learn/learn-java
+https://www.codecademy.com/learn/learn-spring
