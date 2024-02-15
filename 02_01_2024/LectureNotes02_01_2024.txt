@@ -154,6 +154,8 @@ Third the number of sites the database is distributed
 centralized - single site
 distributed - multiple sites
 
+Object comparer -> Used for auth integration.
+Touch base with Ankit about this.
 Homogeneous - same dbms software at each site.
 Heterogeneous - different dbms software at each site.
 
