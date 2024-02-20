@@ -1,0 +1,176 @@
+3.7
+min max notation:
+This notation
+involves associating a pair of integer numbers (min, max) with each participation
+of an entity type E in a relationship type R, where 0 ≤ min ≤ max and max ≥ 1. The
+numbers mean that for each entity e in E, e must participate in at least min and at
+most max relationship instances in R at any point in time. In this method,
+min = 0 implies partial participation, whereas min > 0 implies total participation.
+
+The (min, max) notation is more precise, and we
+can use it to specify some structural constraints for relationship types of higher
+degree.
+
+
+3.8 UML Diagrams
+Anatomy of a UML Diagram
+ a class (similar to an entity type in ER) is displayed as a box
+(see Figure 3.16) that includes three sections: The top section gives the class name
+(similar to entity type name); the middle section includes the attributes; and the
+last section includes operations that can be applied to individual objects (similar to
+individual entities in an entity set) of the class.
+
+The designer can optionally specify the domain (or
+data type) of an attribute if desired, by placing a colon (:) followed by the domain
+name or description, as illustrated by the Name, Sex, and Bdate attributes
+of EMPLOYEE in Figure 3.16. A composite attribute is modeled as a
+structured domain, as illustrated by the Name attribute of EMPLOYEE. A multival-
+ued attribute will generally be modeled as a separate class, as illustrated by the
+LOCATION class in Figure 3.16.
+
+3.9
+Relationship Types of Degree
+Higher than Two
+
+Recall:
+degree of a relationship type -  number of participating entity types.
+
+binary - degree 2
+ternary - degree 3
+
+Class excersise:
+
+The university is organized into colleges (COLLEGE), and each college has a
+unique name (CName), a main office (COffice) and phone (CPhone), and a
+particular faculty member who is dean of the college. Each college adminis-
+ters a number of academic departments (DEPT). Each department has a
+unique name (DName), a unique code number (DCode), a main office
+(DOffice) and phone (DPhone), and a particular faculty member who chairs
+the department. We keep track of the start date (CStartDate) when that fac-
+ulty member began chairing the department.
+
+Min max notation: go over this* figure out in the textbook where this is.
+
+Chapter 4 - The Enhanced Entity–Relationship
+(EER) Model
+
+4.1 - Subclasses, Superclasses, and Inheritance
+
+Recall: in chapter 3 the name of an entity type is
+used to represent both a type of entity and the entity set or collection of entities of that
+type that exist in the database.
+
+e.g. Employee entity type may be distinguished further into SECRETARY, ENGINEER, MANAGER, TECHNICIAN, SALARIED_EMPLOYEE, HOURLY_EMPLOYEE, etc..
+
+simply stated, every entity that is apart of one of the subgroups is also an EMPLOYEE*
+
+each of these subgroupings is called a subclass or subtype of the employee entity type.
+EMPLOYEE entity type is called the superclass or supertype.
+
+We call the relationship between a superclass and any one of its subclasses a
+superclass/subclass or supertype/subtype or simply class/subclass relationship.
+
+An entity cannot exist in the database merely by being a member of a subclass; it
+must also be a member of the superclass. Such an entity can be included optionally
+as a member of any number of subclasses.
+
+it is not necessary that every entity in a
+superclass is a member of some subclass.
+
+We say that an entity that is a member of a subclass inherits all the attributes of
+the entity as a member of the superclass. The entity also inherits all the relationships
+in which the superclass participates. Notice that a subclass, with its own specific (or
+local) attributes and relationships together with all the attributes and relationships it
+inherits from the superclass, can be considered an entity type in its own right.
+
+4.2 Specialization and Generalization
+4.2.1 Specialization
+Specialization is the process of defining a set of subclasses of an entity type; this
+entity type is called the superclass of the specialization.
+
+
+Attributes of subclasses.
+These are called specific (or local) attributes of
+the subclass.
+
+Why include these in our diagram (2 reasons)?
+- There are two main reasons for including class/subclass relationships and special-
+izations. The first is that certain attributes may apply to some but not all entities of
+the superclass entity type. A subclass is defined in order to group the entities to
+which these attributes apply. The members of the subclass may still share the
+majority of their attributes with the other members of the superclass.
+
+- The second reason for using subclasses is that some relationship types may be par-
+ticipated in only by entities that are members of the subclass.
+
+4.2.2 Generalization
+
+We use the term generalization to refer to the pro-
+cess of defining a generalized entity type from the given entity types.
+
+e.g., Car and Truck generalize into Vehicle.
+generalization process can be viewed as being functionally the
+inverse of the specialization process; we can view {CAR, TRUCK} as a specialization
+of VEHICLE rather than viewing VEHICLE as a generalization of CAR and TRUCK.
+
+So far we have introduced the concepts of subclasses and superclass/subclass rela-
+tionships, as well as the specialization and generalization processes. In general, a
+superclass or subclass represents a collection of entities of the same type and hence
+also describes an entity type; that is why superclasses and subclasses are all shown in
+rectangles in EER diagrams, like entity types.
+
+4.3 Constraints and Characteristics
+of Specialization and Generalization
+Hierarchies
+
+attribute defined vs. user defined specialization
+- elaborate more on this*
+
+If all subclasses in a specialization have their membership condition on the same
+attribute of the superclass, the specialization itself is called an attribute-defined
+specialization, and the attribute is called the defining attribute of the special-
+ization.
+
+When we do not have a condition for determining membership in a subclass, the
+subclass is called user-defined.
+
+disjointness constraint - which specifies that the subclasses of the specialization must be disjoint
+sets.
+
+This means that an entity can be a member of at most one of the subclasses of
+the specialization.
+
+The d notation also applies to user-defined subclasses of a specialization that must be
+disjoint.
+
+If the subclasses are not constrained to be disjoint, their sets of entities may be overlapping; that is, the same (real-world) entity may be a member of more
+than one subclass of the specialization.
+
+Completeness constraint:
+- The second constraint on specialization is called the completeness (or totalness)
+constraint, which may be total or partial. A total specialization constraint specifies
+that every entity in the superclass must be a member of at least one subclass
+in the specialization.
+
+Notice that the disjointness and completeness constraints are independent. Hence,
+we have the following four possible constraints on a specialization:
+■ Disjoint, total
+■ Disjoint, partial
+■ Overlapping, total
+■ Overlapping, partial
+
+In general, a superclass that was identified through
+the generalization process usually is total, because the superclass is derived from the
+subclasses and hence contains only the entities that are in the subclasses.
+
+Certain insertion and deletion rules apply to specialization (and generalization) as a
+consequence of the constraints specified earlier. Some of these rules are as follows:
+■ Deleting an entity from a superclass implies that it is automatically deleted
+from all the subclasses to which it belongs.
+
+■ Inserting an entity in a superclass implies that the entity is mandatorily
+inserted in all predicate-defined (or attribute-defined) subclasses for which
+the entity satisfies the defining predicate.
+■ Inserting an entity in a superclass of a total specialization implies that
+the entity is mandatorily inserted in at least one of the subclasses of the
+specialization.
