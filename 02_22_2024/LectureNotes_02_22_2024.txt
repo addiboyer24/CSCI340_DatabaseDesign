@@ -1,0 +1,79 @@
+4.3.2
+- A subclass itself may have further subclasses specified on it, forming a hierarchy or
+a lattice of specializations.
+
+Specialization Hierarchy:
+- A specialization hierarchy has the constraint that every subclass participates as a
+subclass in only one class/subclass relationship; that is, each subclass has only one
+parent, which results in a tree structure or strict hierarchy.
+
+Specialization Lattice:
+- In contrast, for a
+specialization lattice, a subclass can be a subclass in more than one class/subclass
+relationship. Hence, Figure 4.6 is a lattice.
+
+Let's work through an example:
+
+The database keeps track of three types of persons: employees, alumni, and
+students. A person can belong to one, two, or all three of these types. Each
+person has a name, SSN, sex, address, and birth date.
+
+2. Every employee has a salary, and there are three types of employees: faculty,
+staff, and student assistants. Each employee belongs to exactly one
+of these types. For each alumnus, a record of the degree or degrees that
+he or she earned at the university is kept, including the name of the
+degree, the year granted, and the major department. Each student has a
+major department.
+
+3. Each faculty has a rank, whereas each staff member has a staff position. Student
+assistants are classified further as either research assistants or teaching
+assistants, and the percent of time that they work is recorded in the database.
+Research assistants have their research project stored, whereas teaching
+assistants have the current course they work on.
+
+4. Students are further classified as either graduate or undergraduate, with
+the specific attributes degree program (M.S., Ph.D., M.B.A., and so on)
+for graduate students and class (freshman, sophomore, and so on) for
+undergraduates.
+
+Observations:
+In such a specialization lattice or hierarchy, a subclass inherits the attributes not
+only of its direct superclass, but also of all its predecessor superclasses all the way to
+the root of the hierarchy or lattice if necessary.
+
+Notice that an entity may exist in several leaf nodes of the hierarchy,
+where a leaf node is a class that has no subclasses of its own.
+
+- A subclass with more than one superclass is called a shared subclass.
+
+This leads to the concept known as
+multiple inheritance... (let's see an example in java).
+
+- Notice that the existence of at least one shared subclass leads to a lattice (and hence to
+multiple inheritance); if no shared subclasses existed, we would have a hierarchy
+rather than a lattice and only single inheritance would exist.
+
+4.3.3
+Utilizing Specialization and Generalization in
+Refining Conceptual Schemas
+
+- This process is called top-down conceptual refinement. So far, we have a hierarchy;
+then we realize that STUDENT_ASSISTANT is a shared subclass, since it is
+also a subclass of STUDENT, leading to the lattice.
+
+- It is possible to arrive at the same hierarchy or lattice from the other direction. In
+such a case, the process involves generalization rather than specialization and corresponds
+to a bottom-up conceptual synthesis.
+
+- The final design of hierarchies or lattices resulting from either process may be
+identical; the only difference relates to the manner or order in which the schema
+superclasses and subclasses were created during the design process. In practice, it
+is likely that a combination of the two processes is employed.
+
+- Specialization is also common in software engineering design
+methodologies that are based on the object-oriented paradigm.
+
+** Let's program some inheritance in Java! **
+
+4.4 Modeling of UNION Types
+Using Categories

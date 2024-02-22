@@ -1,0 +1,4 @@
+Kyle -> How to manage permissions between roles, routes, etc..
+How to map api's to products (where are these things maintained)?
+
+Jaret -> He could contribute at the higher level.
