@@ -1,7 +1,0 @@
-Code Academy Resources:
-
-https://www.codecademy.com/article/what-is-spring-boot
-
-Course:
-
-https://www.codecademy.com/learn/paths/create-rest-apis-with-spring-and-java
