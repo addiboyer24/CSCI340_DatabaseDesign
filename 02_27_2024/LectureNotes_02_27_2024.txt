@@ -1,0 +1,109 @@
+5.1 Relational Model Concepts
+
+- Relational Model Structure: The relational model organizes the database into relations, akin to tables, resembling flat files with linear record structures.
+
+- Table Representation: Each relation or table consists of rows representing related data values, typically corresponding to real-world entities or relationships. For instance, a table named "STUDENT" may have rows representing individual student entities, with columns like "Name" and "Student_number" aiding in interpretation.
+
+- Difference from Flat Files: While the relational model shares similarities with flat files, such as the tabular representation, it offers distinct advantages, including structured querying, normalization, and relational integrity features, which enhance data management and retrieval capabilities.
+
+- Interpretation Aid: Table and column names play a crucial role in interpreting the meaning of values within each row, facilitating better understanding and management of the database.
+
+- In the formal relational model terminology, a row is called a tuple, a column
+header is called an attribute, and the table is called a relation. The data type
+describing the types of values that can appear in each column is represented by a
+domain of possible values. We now define these terms—domain, tuple, attribute,
+and relation—formally.
+
+More formal definition of each of these...
+
+domain - D is a set of atomic values.
+
+- what does atomic mean: each value in the
+domain is indivisible as far as the formal relational model is concerned.  Common method of specifying a domain is to specify a data type from which the data values forming the domain are drawn.
+
+logical definitions of domains:
+e.g.,
+- Usa_phone_numbers. The set of ten-digit phone numbers valid in the United
+States.
+
+- Social_security_numbers. The set of valid nine-digit Social Security numbers.
+(This is a unique identifier assigned to each person in the United States for
+employment, tax, and benefits purposes.)
+
+- Academic_department_codes. The set of academic department codes, such as
+‘CS’, ‘ECON’, and ‘PHYS’.
+
+A domain is thus given a name, data
+type, and format.
+
+Additional information for interpreting the values of a domain
+can also be given; for example, a numeric domain such as Person_weights should
+have the units of measurement, such as pounds or kilograms.
+
+relation - 
+A relation schema2 R, denoted by R(A1, A2, … , An), is made up of a relation name
+R and a list of attributes, A1, A2, … , An. Each attribute Ai is the name of a role
+played by some domain D in the relation schema R. D is called the domain of Ai
+and is denoted by dom(Ai). A relation schema is used to describe a relation; R is
+called the name of this relation. The degree (or arity) of a relation is the number of
+attributes n of its relation schema.
+
+STUDENT(Name, Ssn, Home_phone, Address, Office_phone, Age, Gpa)
+
+Using the data type of each attribute, the definition is sometimes written as:
+
+STUDENT(Name: string, Ssn: string, Home_phone: string, Address: string,
+Office_phone: string, Age: integer, Gpa: real)
+
+can map these domains to their logical definitions (see domain section above).
+
+A relation (or relation state)4 r of the relation schema R(A1, A2, … , An), also denoted
+by r(R), is a set of n-tuples r = {t1, t2, … , tm}. Each n-tuple t is an ordered list of n
+values t =<v1, v2, … , vn>, where each value vi, 1 ≤ i ≤ n, is an element of dom (Ai) or is
+a special NULL value. (NULL values are discussed further below and in Section 5.1.2.)
+The ith value in tuple t, which corresponds to the attribute Ai, is referred to as t[Ai] or
+t.Ai (or t[i] if we use the positional notation). The terms relation intension for the
+schema R and relation extension for a relation state r(R) are also commonly used.
+
+e.g.,
+
+This product of cardinalities of all domains represents the total number of possible
+instances or tuples that can ever exist in any relation state r(R). Of all these possible
+combinations, a relation state at a given time—the current relation state—reflects
+only the valid tuples that represent a particular state of the real world. In general, as
+the state of the real world changes, so does the relation state, by being transformed
+into another relation state. However, the schema R is relatively static and changes
+very infrequently—for example, as a result of adding an attribute to represent new
+information that was not originally stored in the relation.
+
+It is possible for several attributes to have the same domain. The attribute names indicate
+different roles, or interpretations, for the domain.
+
+How is a relation different from a file or table?
+
+A relation is defined as a set of tuples. Mathematically,
+elements of a set have no order among them; hence, tuples in a relation
+do not have any particular order.
+
+Tuple ordering is not part of a relation definition because a relation attempts to represent
+facts at a logical or abstract level.
+
+tuple - can be considered as a
+set of (<attribute>, <value>) pairs, where each pair gives the value of the mapping
+from an attribute Ai to a value vi from dom(Ai). The ordering of attributes is not
+important, because the attribute name appears with its value.
+
+e.g.,
+
+t = < (Address, 3452 Elgin Road),(Name, Dick Davidson),(Ssn, 422-11-2320),(Age, 25),
+(Office_phone, (817)749-1253),(Gpa, 3.53),(Home_phone, NULL)>
+
+self describing data - When the attribute name and value are included together in a
+tuple.
+
+Values and NULLs in the Tuples.
+This model is sometimes called the flat relational model. Much of the
+theory behind the relational model was developed with this assumption in mind,
+which is called the first normal form assumption.
+
+attribute - 
