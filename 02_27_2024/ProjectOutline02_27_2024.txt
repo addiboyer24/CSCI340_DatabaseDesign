@@ -1,0 +1,9 @@
+Project Proposal - 0.
+
+Project Part 1 - Requirements.
+
+Project Part 2 - ER Diagram.
+
+Project Part 3 - Relational Model, discuss API's.
+
+Project Part 4 - Implement database, API.
