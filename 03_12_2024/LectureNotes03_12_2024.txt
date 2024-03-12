@@ -1,0 +1,262 @@
+The Relational Data Model and
+Relational Database Constraints
+
+5.1 Relational Model Concepts
+
+The relational model - represents the database as a collection of relations.
+
+Informally,
+each relation resembles a table of values or, to some extent, a flat file of records.
+
+Difference between relations and files:
+
+When a relation is thought of as a table of values, each row in the table represents a
+collection of related data values.
+
+A row represents a fact that typically corresponds
+to a real-world entity or relationship.
+
+The table name and column names are used
+to help to interpret the meaning of the values in each row.
+
+Table name:
+i.e. STUDENT tells you what each row will represent facts about.
+
+Column name:
+i.e. Class, and Major specify how to interpret the data values in each row, based on the
+column each value is in. All values in a column are of the same data type.
+
+Informal = Formal:
+row = tuple
+header = attribute
+table = relation
+
+data type describing the types of values that can appear in each column is represented by a domain of possible values.
+
+5.1.1 Domains, Attributes, Tuples, and Relations
+Formal Definitions:
+
+DOMAIN
+domain - D, set of atomic values. atomic - each value is indivisible.
+Common way is to specify a data type.  Also useful to specify a name for a domain (to help in interpreting it's values).
+
+Parts of a domain...
+
+- logical definitions of domains:
+e.g.
+■ Usa_phone_numbers. The set of ten-digit phone numbers valid in the United
+States.
+■ Employee_ages. Possible ages of employees in a company; each must be an
+integer value between 15 and 80.
+
+- data type is also specified:
+e.g.
+■ The data type for Usa_phone_numbers can be declared as character string of the form (ddd)ddd-dddd,
+where each d is a numeric (decimal) digit and the first three digits form a valid
+telephone area code.
+
+■ The data type for Employee_ages is an integer number between
+15 and 80.
+
+RELATIONS:
+Relation schema:
+Denoted by R(A1, A2, ..., An)
+
+Components.
+■ R - relation name
+■- A1, A2, ..., An - list of attributes
+
+■ Ai - each individual attribute, name of a role played by some domain D in the relation schema R.
+■ D - domain of Ai (denoted dom(Ai)).
+
+■ The degree (or arity) of a relation is the number of attributes n of it's relation schema.
+
+e.g.
+■ STUDENT(Name, Ssn, Home_phone, Address, Office_phone, Age, Gpa)
+
+Using the data type of each attribute, the definition is sometimes written as:
+■ STUDENT(Name: string, Ssn: string, Home_phone: string, Address: string, Office_phone: string, Age: integer, Gpa: real)
+
+Questions for the class:
+- Given this example what's the relation name? - STUDENT
+
+- What's the degree (or arity) of the relation? - 7
+
+- What's the domain of Home_phone? i.e. dom(Home_phone)? = Usa_phone_numbers
+
+It's possible to refer to the attributes of the relation schema by their position*
+- i.e. first attribute of STUDENT relation is what? - Name, etc..
+
+Relation (or relation state) r of relation schema R(A1, A2, ..., An):
+denoted r(R) is a set of n-tuples r = {t1, t2, … , tm}.
+
+n-tuple - t ordered list of n values t = <v1, v2, ..., vn>, where each value vi 1<=i<=n is an element of dom(Ai) or the special NULL value.
+
+ith value of tuple t (corresponding to the attribute Ai) is referred to as t[Ai], t.Ai or t[i] (positional notation).
+
+Common terminology:
+relation intension - relation schema R
+relation extension - relation state r(R)
+
+See figure 5.1.
+
+Formal definition of relation (using set theory)..
+relation (or relation state) r(R) is a mathematical relation of
+degree n on the domains dom(A1), dom(A2), … , dom(An), which is a subset of the
+Cartesian product (denoted by ×) of the domains that define R:
+
+r(R) ⊆ (dom(A1) × dom(A2) × . . . × (dom(An))
+The Cartesian product specifies all possible combinations of values from the underlying
+domains. Hence, if we denote the total number of values, or cardinality, in a
+domain D by |D| (assuming that all domains are finite), the total number of tuples
+in the Cartesian product is
+|dom(A1)| × |dom(A2)| × . . . × |dom(An)|
+
+This product of cardinalities of all domains represents the total number of possible
+instances or tuples that can ever exist in any relation state r(R). Of all these possible
+combinations, a relation state at a given time—
+
+current relation state - reflects
+only the valid tuples that represent a particular state of the real world.
+
+in general, as the state of the real world changes, so does the relation state (by being transformed into another relation state).
+
+However, the schema R is relatively static and changes very infrequently —for example, as a result of adding an attribute to represent new information that was not originally stored in the relation.
+
+Nuances*
+possible for several attributes to have the same domain.
+attribute names indicate different roles - interpretations for that domain.
+
+Characteristics (make it different from a file or a table):
+relation - defined as a set of tuples (mathematically elements of a set have no order among them).
+Tuples in a relation have no particular order.
+
+File - records are physically stored on disk (or in memory), so there is always an order among the records.
+The order represents first, second, ith, and last records in a file.
+
+When we display relations as a table, rows are displayed in a certain order.
+
+Why tuple ordering is not part of definition of relation?
+- Tuple ordering is not part of a relation definition because a relation attempts to represent
+facts at a logical or abstract level.
+
+Many tuple orders can be specified on the
+same relation. When a relation is implemented as a file or displayed as a table, a particular
+ordering may be specified on the records of the file or the rows of the table.
+
+Ordering of Values within a Tuple and an Alternative Definition of a Relation.
+
+- According to the preceding definition of a relation, an n-tuple is an ordered list of n
+values, so the ordering of values in a tuple—and hence of attributes in a relation
+schema—is important. However, at a more abstract level, the order of attributes
+and their values is not that important as long as the correspondence between attributes
+and values is maintained.
+
+- An alternative definition of a relation can be given, making the ordering of values
+in a tuple unnecessary. In this definition, a relation schema R = {A1, A2, … , An} is a
+set of attributes (instead of an ordered list of attributes), and a relation state r(R) is
+a finite set of mappings r = {t1, t2, … , tm}, where each tuple ti is a mapping from R
+to D, and D is the union (denoted by ∪) of the attribute domains; that is, D =
+dom(A1) ∪ dom(A2) ∪ … ∪ dom(An). In this definition, t[Ai] must be in dom(Ai)
+for 1 ≤ i ≤ n for each mapping t in r. Each mapping ti is called a tuple.
+
+- According to this definition of tuple as a mapping, a tuple can be considered as a
+set of (<attribute>, <value>) pairs, where each pair gives the value of the mapping
+from an attribute Ai to a value vi from dom(Ai). The ordering of attributes is not
+important, because the attribute name appears with its value.
+
+example:
+t = < (Name, Dick Davidson),(Ssn, 422-11-2320),(Home_phone, NULL),(Address, 3452 Elgin Road),
+(Office_phone, (817)749-1253),(Age, 25),(Gpa, 3.53)>
+t = < (Address, 3452 Elgin Road),(Name, Dick Davidson),(Ssn, 422-11-2320),(Age, 25),
+(Office_phone, (817)749-1253),(Gpa, 3.53),(Home_phone, NULL)>
+
+
+self-describing data*
+- when the attribute value and name are included together in a tuple (description of each value (attribute name) is included in the tuple).
+
+- We will mostly use the first definition of relation, where the attributes are ordered
+in the relation schema and the values within tuples are similarly ordered, because it
+simplifies much of the notation. However, the alternative definition given here is
+more general.
+
+Values and NULLs in the Tuples.
+Each value in a tuple is an atomic value; that
+is, it is not divisible into components within the framework of the basic relational
+model. Hence, composite and multivalued attributes (see Chapter 3) are not
+allowed. This model is sometimes called the flat relational model.
+
+Most of the relational model was thought of with this in mind - first normal form assumption.
+
+Hence, multivalued attributes
+must be represented by separate relations,and composite attributes are represented
+only by their simple component attributes in the basic relational model.
+
+An important concept is that of NULL values, which are used to represent the values of
+attributes that may be unknown or may not apply to a tuple. A special value, called
+NULL, is used in these cases.
+
+In general, we can have several meanings for NULL values, such as
+value unknown, value exists but is not available, or attribute does not apply to this tuple
+(also known as value undefined).
+
+The exact meaning of a NULL value governs how it fares during arithmetic aggregations
+or comparisons with other values. For example, a comparison of two NULL
+values leads to ambiguities—if both Customer A and B have NULL addresses, it does
+not mean they have the same address. During database design, it is best to avoid
+NULL values as much as possible. We will discuss this further in Chapters 7 and 8 in
+the context of operations and queries, and in Chapter 14 in the context of database
+design and normalization.
+
+    Declaration or Assertion:
+        Relation schema can be seen as a declaration or assertion about entities or relationships.
+        Example: The schema of the STUDENT relation asserts that a student entity generally has attributes like Name, Ssn, Home_phone, etc.
+        Each tuple in the relation represents a fact or instance of the assertion. For instance, the first tuple in the STUDENT relation asserts details about a specific student.
+
+    Facts about Entities and Relationships:
+        Some relations represent facts about entities, while others represent facts about relationships.
+        Example: The MAJORS relation schema asserts that students major in academic disciplines. Each tuple in this relation relates a student to their major discipline.
+
+    Uniform Representation:
+        The relational model treats facts about both entities and relationships uniformly as relations.
+        This might lead to some compromise in understandability as it may be unclear whether a relation represents an entity type or a relationship type.
+
+    Mapping to ER Model:
+        ER Model was introduced earlier and provides a detailed description of entity and relationship concepts.
+        Mapping procedures demonstrate how constructs of the ER/EER conceptual data models are converted to relations.
+
+    Alternative Interpretation as Predicate:
+        A relation schema can also be interpreted as a predicate, where values in each tuple satisfy the predicate.
+        Example: The predicate STUDENT(Name, Ssn, ...) is true for tuples in the STUDENT relation.
+        This interpretation is useful in logical programming languages like Prolog, where the relational model is employed.
+
+    Closed World Assumption:
+        The closed world assumption asserts that the only true facts in the universe are those present within the extension of the relation(s). Other combinations of values make the predicate false.
+        Useful for querying relations based on relational calculus.
+
+This interpretation of relations provides a foundation for understanding and utilizing relational databases, allowing for a structured representation of entities, relationships, and facts within a database system.
+We will use the following notation in our presentation:
+■ A relation schema R of degree n is denoted by R(A1, A2, … , An).
+■ The uppercase letters Q, R, S denote relation names.
+■ The lowercase letters q, r, s denote relation states.
+■ The letters t, u, v denote tuples.
+■ In general, the name of a relation schema such as STUDENT also indicates
+the current set of tuples in that relation—the current relation state—whereas
+STUDENT(Name, Ssn, …) refers only to the relation schema.
+■ An attribute A can be qualified with the relation name R to which it belongs
+by using the dot notation R.A—for example, STUDENT.Name or
+STUDENT.Age. This is because the same name may be used for two attributes
+in different relations. However, all attribute names in a particular
+relation must be distinct.
+■ An n-tuple t in a relation r(R) is denoted by t = <v1, v2, … , vn>, where vi is
+the value corresponding to attribute Ai. The following notation refers to
+component values of tuples:
+ Both t[Ai] and t.Ai (and sometimes t[i]) refer to the value vi in t for attribute
+Ai.
+ Both t[Au, Aw, … , Az] and t.(Au, Aw, … , Az), where Au, Aw, … , Az is a list
+of attributes from R, refer to the subtuple of values <vu, vw, … , vz> from t
+corresponding to the attributes specified in the list.
+As an example, consider the tuple t = <’Barbara Benson’, ‘533-69-1238’,
+‘(817)839-8461’, ‘7384 Fontana Lane’, NULL, 19, 3.25> from the STUDENT relation in Figure
+5.1; we have t[Name] = <‘Barbara Benson’>, and t[Ssn, Gpa, Age] = <‘533-69-1238’,
+3.25, 19>.
