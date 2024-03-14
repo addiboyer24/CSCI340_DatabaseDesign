@@ -1,0 +1,69 @@
+
+5.2 Relational Model Constraints and Relational Database Schemas
+
+There are generally many
+restrictions or constraints on the actual values in a database state.
+
+- model-based (implicit) constraints - Constraints that are inherent in the data model.
+
+- schema-based constraints (explicit) constraints - Constraints that can be directly expressed in the schemas of the data model, typically
+by specifying them in the DDL.
+
+- application-based (semantic) constraints or business rules - constraints that cannot be directly expressed in the schemas of the data
+model, and hence must be expressed and enforced by the application programs
+or in some other way.
+
+First section were model-based constraints.
+
+Side note:
+- data dependencies - Another important category of constraints (having to do with normalization).
+
+This section is schema-based constraints (ones that can be specified by the DDL)*
+
+Different schema-based constraints:
+domain constraints, key constraints, constraints
+on NULLs, entity integrity constraints, and referential integrity constraints.
+
+5.2.1 Domain Constraints
+- Domain constraints specify that within each tuple, the value of each attribute A must
+be an atomic value from the domain dom(A). We have already discussed the ways in
+which domains can be specified in Section 5.1.1. The data types associated with
+domains typically include standard numeric data types for integers (such as short
+integer, integer, and long integer) and real numbers (float and double-precision float).
+Characters, Booleans, fixed-length strings, and variable-length strings are also available,
+as are date, time, timestamp, and other special data types. Domains can also be
+described by a subrange of values from a data type or as an enumerated data type in
+which all possible values are explicitly listed. Rather than describe these in detail here,
+we discuss the data types offered by the SQL relational standard in Section 6.1.
+
+5.2.2 Key Constraints and Constraints on NULL Values
+recall:
+relation - set of tuples (by definition, all elements of a set are distinct).
+follows all tuples of a relation must also be distinct.
+
+no two tuples can have the same combination of values for all their attributes.  There are usually other subsets of attributes of a relation schema R with the property that no two tuples in any relation state r of R should have the same combination of values for these attributes.
+
+e.g.
+Subset of attributes named SK
+
+t1[SK] != t2[SK].
+
+any such SK is called a superkey of the relation schema R.  a superkey SK specifies a uniqueness constraint
+
+uniqueness constraint - no two distinct tuples in any state r of
+R can have the same value for SK.
+
+Every relation has at least one default superkey - what is that superkey? (set of all it's attributes).
+
+key (has no redundancy) - Superkey K of R with the additional property that removing an attribute A from K leaves a set of attributes K' that is not a superkey of R any more.
+
+Satisfies two properties..
+1. Two distinct tuples in any state of the relation cannot have identical values
+for (all) the attributes in the key. This uniqueness property also applies to a
+superkey.
+2. It is a minimal superkey—that is, a superkey from which we cannot remove
+any attributes and still have the uniqueness constraint hold. This minimality
+property is required for a key but is optional for a superkey.
+
+Hence key is a superkey, not vice versa (quiz question)*
+
