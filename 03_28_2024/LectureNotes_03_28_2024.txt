@@ -1,0 +1,310 @@
+5.2.1 Domain Constraints
+
+Domain constraints specify that within each tuple, the value of each attribute A must
+be an atomic value from the domain dom(A).
+
+Can be classic data types, or subranges of classic data types.  Most generally they're defined by built in data types of the DDL (data definition language) in SQL.
+
+5.2.2 Key Constraints and Constraints on NULL Values
+
+In the formal relational model, a relation is defined as a set of tuples. By definition,
+all elements of a set are distinct; hence, all tuples in a relation must also be distinct.
+
+Must be distinct when all attributes are included.  Further, there are usually subsets of attributes we want this condition to hold for i.e. some subset of attributes with
+the property that no two tuples in any relation state r of R should have the same
+combination of values for these attributes.
+
+Subset of attributes SK
+
+any two distinct tuples t1, t2 - recall...
+
+r(R) - relation state.
+set of n-tuples t = {t1, t2, ..., tm}
+where each t1 is a set of n-values v = {v1, v2, ..., vn}.
+
+t1[SK] != t2[SK]
+
+any set of such attributes SK is called a superkey of the relation schema R.
+Superkeys specify a uniqueness constraint - no distinct tuples in any state r(R) can have the same value for SK.
+
+Every relation has one default superkey? - Class what is it? (potential quiz question*)
+
+Answer: The set of all it's attributes! (Superkeys can have redundant attributes).
+
+keys have no redundancy! 
+
+Key k of a relation schema R is a superkey of R with additional property that removing attribute A from K leaves a set of attributes K' that is not a superkey of R any more.
+
+Satisfies two properties...
+
+1. Two distinct tuples in any state of the relation cannot have identical values
+for (all) the attributes in the key. This uniqueness property also applies to a
+superkey.
+2. It is a minimal superkey—that is, a superkey from which we cannot remove
+any attributes and still have the uniqueness constraint hold. This minimality
+property is required for a key but is optional for a superkey.
+
+- Hence, a key is a superkey but not vice versa (quiz question)*
+
+How can we use keys?
+
+- The value of a key attribute can be used to identify uniquely each tuple in the relation.
+
+- A set of attributes
+constituting a key is a property of the relation schema;* it is a constraint that should
+hold on every valid relation state of the schema. A key is determined from the meaning
+of the attributes, and the property is time-invariant: It must continue to hold
+when we insert new tuples in the relation. For example, we cannot and should not
+designate the Name attribute of the STUDENT relation in Figure 5.1 as a key because
+it is possible that two students with identical names will exist at some point in a
+valid state.
+
+In general, a relation schema can have more than one key (quiz question)* in that case each key is a candidate key.  It's common to designate one of the cadidate keys as a primary key of the relation (the candidate key used to identify tuples in a relation).
+
+How to specify them in the relational schema
+
+- We use the convention
+that the attributes that form the primary key of a relation schema are underlined, as
+shown in Figure 5.4.
+
+How to choose from candidate keys to be primary keys (guidance)*
+
+- better to choose a primary key with a single attribute or a small number
+of attributes.
+
+- The other candidate keys are designated as unique keys and are
+not underlined.
+
+5.2.3 Relational Databases and Relational
+Database Schemas
+
+definitions and constraints so far only apply to single relations and their attributes*
+relational databases in general contain many relations, with tuples in relations that are related in various ways.
+
+Definitions:
+Relational Database Schema S set of relation schemas S = {R1, R2, ..., Rm} and set of integrity constraints IC.
+
+Relational Database State DB of S is a set of relation states DB = {r1, r2, ..., rm} each ri is a state of Ri and such that ri relation state satisfies the integrity constraints specified in IC.
+
+Relational Database Schema = COMPANY.
+How many relation schemas?
+i.e. COMPANY = {EMPLOYEE, DEPARTMENT,
+DEPT_LOCATIONS, PROJECT, WORKS_ON, DEPENDENT}
+
+- A database state that does not obey all the integrity constraints is called not valid.
+
+- a state that satisfies all the constraints in the defined set of
+integrity constraints IC is called a valid state.
+
+Attribute Names in Relations:
+Cases where attributes in different relations correspond to the same real world concept (i.e. the number given to a department in DEPARTMENT and DEPT_LOCATIONS relations).
+
+May or may not have the same name in different relations (even though they correspond to the same real world concept).
+
+Alternatively attributes that represent different concepts may have the same name in different relations (i.e. Name attribute in Both DEPARTMENT and EMPLOYEE relations).
+
+Used to be assumption that would always share the same name if it corresponded to the same real world concept.  Do you see where this could be a problem?
+
+Answer: In self referencing relations* i.e. remember in conceptual model with self referencing relationship we had to define roles each attribute plays (this roles are the different attribute names)*
+
+i.e. EMPLOYEE relation SSN for the employee themselves, and SSN for their manager.
+Must distinguish their meaning, do so by giving them different attribute names in the EMPLOYEE relation.
+
+Relational DBMS' must have a DDL (Data definition language) for defining a relational database schema.  Most use SQL (next week)*
+
+- Integrity constraints are specified on a database schema and are expected to hold on
+every valid database state of that schema.
+
+5.2.4 Entity Integrity, Referential Integrity, and Foreign Keys
+
+Entity Integrity.
+- entity integrity constraint: states that no primary key value can be NULL.
+
+Why's that? (from your definition of a primary key)*
+We have to use it to uniquely identify tuples.
+
+May not be able to distinguish them if we try to reference from other relations.
+
+Null values suggest we cannot identify tuples (may factor into choosing a primary key vs. candidate keys)*
+
+- Key constraints and entity integrity constraints are specified on individual relations*
+
+referential integrity constraint - specified between two relations and is used to
+maintain the consistency among tuples in the two relations.
+
+Informal: states that a tuple in one relation that refers to another relation
+must refer to an existing tuple in that relation.
+
+Formal definition:
+foreign key - A set of attributes FK in relation schema R1 is a foreign key of R1 that references relation R2 if it satisfies the following rules:
+
+1. The attributes in FK have the same domain(s) as the primary key attributes
+PK of R2; the attributes FK are said to reference or refer to the relation R2.
+
+2. A value of FK in a tuple t1 of the current state r1(R1) either occurs as a value
+of PK for some tuple t2 in the current state r2(R2) or is NULL. In the former
+case, we have t1[FK] = t2[PK], and we say that the tuple t1 references or
+refers to the tuple t2.
+
+If these two conditions hold, a referential integrity constraint from R1 to
+R2 is said to hold.
+
+Usually many referential integrity constraints in a database of many relations.
+
+Referential integrity constraints typically arise from the
+relationships among the entities represented by the relation schemas*
+
+Value in the referencing relation must refer to an existing tuple, or be NULL (hasn't been assigned yet, or doesn't exist)*
+
+Foreign key can refer to it's own relation*
+
+- In this definition, R1 is called the referencing relation and R2 is the referenced
+relation.
+
+How to specify on the Relational Database Schema?
+
+- We can diagrammatically display referential integrity constraints by drawing a directed
+arc from each foreign key to the relation it references. For clarity, the arrowhead may
+point to the primary key of the referenced relation.
+
+
+All integrity constraints should be specified on the relational database schema (that is,
+specified as part of its definition) if we want the DBMS to enforce these constraints on
+the database states. Hence, the DDL includes provisions for specifying the various
+types of constraints so that the DBMS can automatically enforce them.
+
+In SQL, the
+CREATE TABLE statement of the SQL DDL allows the definition of primary key,
+unique key, NOT NULL, entity integrity, and referential integrity constraints, among
+other constraints (see Sections 6.1 and 6.2) .
+
+5.2.5 Other Types of Constraints
+
+semantic integrity constraints - cannot be specified by the DDL of the database schema.
+
+- the salary of an employee should not exceed the salary of the employee’s
+supervisor and the maximum number of hours an employee can work on all projects
+per week is 56.
+
+Such constraints can be specified and enforced within the application
+programs that update the database i.e. our API's :)
+
+The types of constraints we discussed so far may be called state constraints
+because they define the constraints that a valid state of the database must satisfy.
+
+transition constraints - can be defined to deal
+with state changes in the database.
+
+i.e. the salary of an employee can only increase.
+
+Typically enforced by application programs i.e. your API's.
+
+5.3 Update Operations, Transactions,
+and Dealing with Constraint Violations
+
+operations can be categorized into retrievals and updates.
+
+The relational algebra operations, which can be used to specify retrievals,
+are discussed in detail in Chapter 8. A relational algebra expression forms a new
+relation after applying a number of algebraic operators to an existing set of relations;
+its main use is for querying a database to retrieve information. The user formulates
+a query that specifies the data of interest, and a new relation is formed by
+applying relational operators to retrieve this data. The result relation becomes the
+answer to (or result of ) the user’s query.
+
+- There are three basic operations that can change the states of relations in the database:
+Insert, Delete, and Update (or Modify).
+
+
+
+
+Domain, Key, Entity Integrity, Referential Integrity*
+
+- They insert new data, delete old data,
+or modify existing data records, respectively.
+
+What constraints can be violated on an insert?
+Insert can violate any of the four types of constraints.
+
+Let's try to come up with an example for each*
+
+- The Insert operation provides a list of attribute values for a new tuple t that is to be
+inserted into a relation R. Insert can violate any of the four types of constraints.
+Domain constraints can be violated if an attribute value is given that does not
+appear in the corresponding domain or is not of the appropriate data type. Key
+constraints can be violated if a key value in the new tuple t already exists in another
+tuple in the relation r(R). Entity integrity can be violated if any part of the primary
+key of the new tuple t is NULL. Referential integrity can be violated if the value of
+any foreign key in t refers to a tuple that does not exist in the referenced relation.
+
+If an insertion violates one or more constraints, default option is to reject the insertion.
+Useful if the DBMS could provide a reason to the user why the operation was rejected.
+
+another option is to try and correct it, but this is not generally used for inserts*
+
+- In the first operation, the DBMS could ask the user to provide a value for Ssn, and
+could then accept the insertion if a valid Ssn value is provided. In operation 3, the
+DBMS could either ask the user to change the value of Dno to some valid value
+(or set it to NULL), or it could ask the user to insert a DEPARTMENT tuple with
+Dnumber = 7 and could accept the original insertion only after such an operation
+was accepted. Notice that in the latter case the insertion violation can cascade back
+to the EMPLOYEE relation if the user attempts to insert a tuple for department 7 with
+a value for Mgr_ssn that does not exist in the EMPLOYEE relation.
+
+5.3.2 The Delete Operation
+What constraints can be violated for Delete?
+
+can only violate referential integrity.This occurs if the tuple
+being deleted is referenced by foreign keys from other tuples in the database.
+
+Several options are available if a deletion operation causes a violation.
+
+- The first option, called restrict, is to reject the deletion.
+
+- The second option, called cascade, is
+to attempt to cascade (or propagate) the deletion by deleting tuples that reference the
+tuple that is being deleted.
+
+- A third option, called set null or set default, is to modify the referencing attribute
+values that cause the violation; each such value is either set to NULL or changed to reference another default valid tuple.
+
+- Notice that if a referencing attribute that
+causes a violation is part of the primary key, it cannot be set to NULL; otherwise, it
+would violate entity integrity (quiz question)*
+
+You can use combinations of these options for dealing with violating referential integrity.
+
+In general, when a referential integrity constraint is specified in the DDL, the DBMS
+will allow the database designer to specify which of the options applies in case of a
+violation of the constraint.
+
+5.3.3 The Update Operation
+What constraints can be violated for Delete?
+
+Updating an attribute that is neither part of a primary key nor part of a foreign key
+usually causes no problems; only has to check for domain constraint to be violated.
+
+Modifying a primary key value is similar
+to deleting one tuple and inserting another in its place because we use the primary
+key to identify tuples. Hence, the issues discussed earlier in both Sections 5.3.1
+(Insert) and 5.3.2 (Delete) come into play.
+
+Modifying a foreign key attribute, the DBMS must make sure that the new value refers to an existing tuple in the referenced
+relation (or is set to NULL).
+
+Similar options exist to deal with referential integrity
+violations caused by Update as those options discussed for the Delete operation.
+In fact, when a referential integrity constraint is specified in the DDL, the DBMS will
+allow the user to choose separate options to deal with a violation caused by Delete
+and a violation caused by Update
+
+5.3.4 The Transaction Concept
+A transaction is an executing program that includes
+some database operations, such as reading from the database, or applying insertions,
+deletions, or updates to the database. At the end of the transaction, it must
+leave the database in a valid or consistent state that satisfies all the constraints specified
+on the database schema. A single transaction may involve any number of
+retrieval operations (to be discussed as part of relational algebra and calculus in
+Chapter 8, and as a part of the language SQL in Chapters 6 and 7) and any number
+of update operations. These retrievals and updates will together form an atomic
+unit of work against the database.
