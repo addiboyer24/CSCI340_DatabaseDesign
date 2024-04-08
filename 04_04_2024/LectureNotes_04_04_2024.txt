@@ -1,0 +1,505 @@
+Basic SQL
+
+- The name SQL is presently expanded as Structured Query Language.
+
+Why SQL?
+- This is because even if the users became dissatisfied with the particular relational DBMS product they were using, converting to another relational 
+- DBMS product was not expected to be too expensive and time-consuming because 
+both systems followed the same language standards.
+
+- Originally, 
+SQL was called SEQUEL (Structured English QUEry Language) and was designed 
+and implemented at IBM Research as the interface for an experimental relational 
+database system called SYSTEM R.
+
+- Who is Standardizing it?
+ANSI (American National Standards Institute) and ISO (International Standards Organization).
+
+- SQL is a comprehensive database language: It has statements for data definitions, 
+queries, and updates. Hence, it is both a DDL and a DML (Quiz question)*
+
+- core and extensions - core is supposed to be implemented by all RDBMS vendors.
+
+DDL Commands (Creating Schema's and Tables).
+
+6.1 SQL Data Definition and Data Types
+
+- Back to the practical relational model.
+tables (relation), columns (attribute), and rows (tuple).
+- used interchangeably.
+
+Data Definition - (CREATE), used to create schemas, tables, types, and domains as well as other things.
+
+6.1.1 Schema and Catalog Concepts in SQL
+
+Schemas:
+- group together tables 
+and other constructs that belong to the same database application (in some systems, 
+a schema is called a database).
+
+- An SQL schema is identified by a schema name and 
+includes an authorization identifier to indicate the user or account who owns the 
+schema, as well as descriptors for each element in the schema.
+
+- Schema elements
+include tables, types, constraints, views, domains, and other constructs (such as 
+authorization grants) that describe the schema.
+
+CREATE SCHEMA statement.
+
+Can define all the schema's elements at once, or just the schema name, and authorization identifier and define the elements later.
+
+e.g. 
+
+CREATE Schema UNIVERSITY AUTHORIZATION 'csci340admin';
+
+In general, not all users are authorized to create schemas and schema elements.
+Who do you think would do this (think back to the chapter on types of users)?
+
+- Answer: System Administrators, or Database Administrators (quiz question)*
+
+CATALOG - collection of schemas.
+there is usually a default schema (dbo).
+catalog always contains a special schema INFORMATION_SCHEMA, provides information on all the schemas in the catalog, and all the element descriptors in these schemas.
+
+- Integrity 
+constraints such as referential integrity can be defined between relations only if 
+they exist in schemas within the same catalog. Schemas within the same catalog can 
+also share certain elements, such as type and domain definitions.
+
+6.1.2 The CREATE TABLE Command in SQL
+
+CREATE TABLE used to specify a new relation (table) by giving it a name and specifying it's attributes and initial constraints.
+
+format - ATTRIBUTE NAME ATTRIBUTE DATA TYPE ATTRIBUTE CONSTRAINT(S)
+
+Constraints - key, entity integrity, referential integrity (can be specified within the CREATE TABLE statements after the attributes are declared, or they can be specified later using the ALTER TABLE command.
+
+See Figure 3.7
+
+When creating the table, you can explicitly define the schema the relation (table) will be a part of.
+
+- Explicit:
+CREATE TABLE UNIVERSITY.STUDENT...
+
+- Implicit:
+CREATE TABLE STUDENT...
+
+These are called base tables (or base relations).
+Tables and it's rows are actually created and stored as a file by the DBMS.
+
+Base relation vs. virtual relations (created through the CREATE VIEW statement)
+which may or may not correspond to a physical file.
+
+In SQL, the attributes in a base table are considered to be ordered in the sequence in which they are specified in the CREATE TABLE statement.
+
+- rows (tuples) are not considered to be ordered within a table (relation)*
+
+You may have to leave things out:
+It is important to note that in Figure 6.1, there are some foreign keys that may cause 
+errors because they are specified either via circular references or because they refer 
+to a table that has not yet been created. For example, the foreign key Super_ssn in 
+the EMPLOYEE table is a circular reference because it refers to the EMPLOYEE table 
+itself. The foreign key Dno in the EMPLOYEE table refers to the DEPARTMENT table, 
+which has not been created yet. To deal with this type of problem, these constraints 
+can be left out of the initial CREATE TABLE statement, and then added later using 
+the ALTER TABLE statement (see Chapter 7). We displayed all the foreign keys in 
+Figure 6.1 to show the complete COMPANY schema in one place.
+
+6.1.3 Attribute Data Types and Domains in SQL
+
+The basic data types available for attributes include numeric, character string, bit 
+string, Boolean, date, and time.
+
+- Numeric data types, integer numbers of various sizes (INTEGER or INT, SMALLINT, BIGINT) & floating point numbers of various precision (FLOAT or REAL, DOUBLE).  Formatted numbers can be declared by using DECIMAL(i,j) where i (the precision), is the total number of decimal digits after the decimal point.  j, the scale is the number of digits after the decimal point. The default for scale is zero, default for precision is implementation defined.
+
+- Character-string data types
+- fixed length i.e. CHAR(n) or CHARACTER(n), n is the number of characters.
+- varying length i.e. VARCHAR(n) or CHAR VARYING(n) or CHARACTER VARYING(n), n is the maximum number of characters.
+
+Literal string values - single quotes (apostrophes)
+Case sensitive - distinction is made between uppercase and lowercase.
+
+- Fixed length, shorter strings are padded with empty string to the right.
+- Padded blanks are generally ignored when strings are compared.
+
+Concatenation operator*
+
+- Bit-string - won't go into this.
+
+- Boolean data type, traditionally true/false. but NULL values lead to a three-valued logic to be used, third possible value for a BOOLEAN data type is UNKNOWN.
+
+- Date - YEAR,MONTH,DAY (YYYY-MM-DD). 
+- TIME - HOUR,MINUTE,SECOND (HH:MM:SS)
+Only Valid dates and times should be allowed*
+Operators <, >, etc... (times in the past are less than times in the present, etc..)
+
+Literal values signified with single quoted strings
+i.e. today's date
+'2024-02-04'
+
+Additional Data Types...
+A timestamp - includes DATE and TIME fields, plus a minimum of six positions for decimal fractions.
+
+DATE, TIME, and TIMESTAMP can be considered a special type of String. can be used in string comparison by being cast (or coerced or converted) into equivelent strings.
+
+
+Domains - 
+it's possible to specify the data type of each attribute directly (as in Figure 6.1)
+domain can be declared, the domain name can be used with the attribute specification.
+
+*makes it easier to change the data type for a domain that is used by numerous attributes in a schema.
+
+i.e. CREATE DOMAIN SSN_TYPE AS CHAR(9);
+
+Now we can use SSN_TYPE in place of attribute data type.
+
+- A domain can also have an optional default specification via a 
+DEFAULT clause, as we discuss later for attributes. Notice that domains may not be 
+available in some implementations of SQL.
+
+CREATE TYPE command (which can be used to create user defined types or UDT's)
+
+- it is often used in conjunction with specifying object database features 
+that have been incorporated into more recent versions of SQL.
+
+6.2 Specifying Constraints in SQL
+Constraints that can be specified upon table creation. these include
+- restriction on attribute domains and NULLs
+- key
+- referential integrity
+- constraints on individual tuples within a relation using the CHECK clause.
+
+6.2.1 Specifying Attribute Constraints and Attribute Defaults
+Because SQL allows NULLs as attribute values, a constraint NOT NULL may be specified 
+if NULL is not permitted for a particular attribute.
+
+- Implicitly specified for the attributes that are part of the primary key for each relation*
+
+- Can be explicitly specified for other attributes that cannot have NULL values.
+
+Default Values (Constraint):
+- add "DEFAULT <value>" to an attribute definition.
+
+Default value is included in any new tuple if an explicit value is not provided for that attribute.
+
+- For attributes without default values defined, the default value is NULL for attributes that do not have the NOT NULL constraint (quiz question)*
+
+Check Constraint:
+CHECK clause following an attribute or domain definition.
+
+i.e. department numbers are restricted to be between 1 and 20;
+
+Dnumber INT NOT NULL CHECK (Dnumber > 0 AND Dnumber < 21);
+
+The CHECK clause can also be used in conjunction with the CREATE DOMAIN statement i.e.
+
+CREATE DOMAIN D_NUM AS INTEGER
+CHECK (D_NUM > 0 AND D_NUM < 21);
+
+6.2.2 Specifying Key and Referential Integrity Constraints
+
+Key Constraints:
+PRIMARY KEY - specifies one or more attributes that make up the primary key of a relation.  If it has a single attribute it can follow the attribute directly i.e.
+
+Dnumber INT PRIMARY KEY,
+
+UNIQUE - specifies alternate (unique) keys, also known as what? (candidate keys)*
+can be specified directly for a unique key if it is a single attribute
+
+Dname VARCHAR(15) UNIQUE,
+
+Referential Integrity Constraints:
+FOREIGN KEY - violated when tuples are inserted and deleted.  When a foreign key or primary key attribute value is updated.
+
+- default action is to reject (known as the RESTRICT option)
+However, the schema designer can specify an alternative 
+action to be taken by attaching a referential triggered action clause to any foreign 
+key constraint. The options include SET NULL, CASCADE, and SET DEFAULT. An 
+option must be qualified with either ON DELETE or ON UPDATE.
+
+6.2.3 Giving Names to Constraints
+keyword CONSTRAINT
+constraint name - used to identify a particular constraint in the case in which a constraint must be dropped later and replaced with another constraint.
+
+6.2.4 Specifying Constraints on Tuples Using CHECK
+table constraints (i.e. key and referential integrity) - additional check clause at the end of the CREATE TABLE statement.
+
+row-based constraints - they apply to each row individually and are checked whenever a row is inserted or modified.
+
+CHECK (Dept_create_date <= Mgr_start_date);
+
+6.3 Basic Retrieval Queries in SQL
+One basic statement for retrieving information from a database:
+SELECT statement.
+
+SQL allows a 
+table (relation) to have two or more tuples that are identical in all their attribute 
+values. Hence, in general, an SQL table is not a set of tuples, because a set does not 
+allow two identical members; rather, it is a multiset (sometimes called a bag) of 
+tuples. Some SQL relations are constrained to be sets because a key constraint has 
+been declared or because the DISTINCT option has been used with the SELECT statement (described later in this section). We should be aware of this distinction as we 
+discuss the examples.
+
+6.3.1 The SELECT-FROM-WHERE Structure 
+of Basic SQL Queries
+
+basic form of the select statement:
+select-from-where block (mapping)
+
+SELECT <attribute list>
+FROM <table list>
+WHERE <condition>;
+
+where
+■ <attribute list> is a list of attribute names whose values are to be retrieved by 
+the query.
+■ <table list> is a list of the relation names required to process the query.
+■ <condition> is a conditional (Boolean) expression that identifies the tuples 
+to be retrieved by the query.
+
+logical comparison operators:
+In SQL, the basic logical comparison operators for comparing attribute values with 
+one another and with literal constants are =, <, <=, >, >=, and <>.
+
+How about java?
+let students give them here...
+
+Main difference? - not equal operator.
+
+Query description: have class come up with some simple query.
+
+Example here (see pdf and sql code):
+
+SELECT - specifies the attributes that are to be retrieved (projection attributes) in relational algebra.
+
+WHERE - specifies the boolean condition that must be true for any retrieved tuple (selection condition).
+
+- tuple variable or iterator in the SQL query ranging or 
+looping over each individual tuple in the EMPLOYEE table and evaluating the condition in the WHERE clause. Only those tuples that satisfy the condition—that is, 
+those tuples for which the condition evaluates to TRUE after substituting their corresponding attribute values - are selected.
+
+- a selection condition
+that chooses the particular tuple of interest in the X table
+i.e. Dname = ‘Research’
+
+a join condition, 
+because it combines two tuples: one from X and one from Y, 
+whenever the value of attributeX in X is equal to the value of attributeY in 
+Y.
+
+i.e. attributeX (X) = attributeY (Y)
+
+A query that involves only selection and join conditions plus projection attributes is 
+known as a select-project-join query.
+
+example query:
+COME UP WITH EXAMPLE IN CLASS.
+
+6.3.2 Ambiguous Attribute Names, Aliasing, 
+Renaming, and Tuple Variables
+
+In SQL, the same name can be used for two (or more) attributes as long as the 
+attributes are in different tables (quiz question)*
+
+If this is the case, and a multitable query refers to 
+two or more attributes with the same name, we must qualify the attribute name 
+with the relation name to prevent ambiguity.
+
+do so by prefixing the relation name to the attribute name with a period
+i.e. relationname.attributename
+
+Ambiguity.
+Fully qualified attribute names can be used for clarity even if there is no ambiguity in attribute names. Q1 can be rewritten as Q1′ below with fully qualified 
+attribute names.
+
+Clarity.
+Fully qualified attribute names can be used for clarity even if there is no ambiguity in attribute names. Q1 can be rewritten as Q1′ below with fully qualified 
+attribute names.
+
+Aliases.
+We can also rename the table names to shorter names by creating an alias for each table name to avoid repeated typing of long table names.
+
+Aliases follow the keyword AS.
+
+i.e. 
+EMPLOYEE AS E(Fn, Mi, Ln, Ssn, Bd, Addr, Sex, Sal, Sssn, Dno)
+in the FROM clause, Fn becomes an alias for Fname, Mi for Minit, Ln for Lname, and 
+so on.
+
+We can use this alias-naming or renaming mechanism in any SQL query to specify 
+tuple variables for every table in the WHERE clause, whether or not the same relation needs to be referenced more than once. In fact, this practice is recommended 
+since it results in queries that are easier to comprehend.
+
+6.3.3 Unspecified WHERE Clause and Use of the Asterisk
+- A missing WHERE clause indicates 
+no condition on tuple selection; hence, all tuples of the relation specified in the 
+FROM clause qualify and are selected for the query result.
+
+If more than one relation is specified in the FROM clause and there is no WHERE clause, then the 
+CROSS PRODUCT—all possible tuple combinations—of these relations is 
+selected.
+
+WARNING***
+It is extremely important to specify every selection and join condition in the WHERE
+clause; if any such condition is overlooked, incorrect and very large relations may 
+result*
+
+Selecting all the attributes:
+- To retrieve all the attribute values of the selected tuples, we do not have to list the 
+attribute names explicitly in SQL; we just specify an asterisk (*), which stands for all 
+the attributes. The * can also be prefixed by the relation name or alias; for example, 
+EMPLOYEE.* refers to all attributes of the EMPLOYEE table.
+
+6.3.4 Tables as Sets in SQL
+As we mentioned earlier, SQL usually treats a table not as a set but rather as a multiset; 
+duplicate tuples can appear more than once in a table, and in the result of a query. 
+SQL does not automatically eliminate duplicate tuples in the results of queries, for 
+the following reasons:
+
+Expensive, Might Want to See them, Don't want to eliminate duplicates in aggregates*
+
+■ Duplicate elimination is an expensive operation. One way to implement it is 
+to sort the tuples first and then eliminate duplicates.
+■ The user may want to see duplicate tuples in the result of a query.
+■ When an aggregate function (see Section 7.1.7) is applied to tuples, in most 
+cases we do not want to eliminate duplicates.
+
+SQL table with a key is restricted to being a set, since the key value must be distinct in each tuple.
+
+DISTINCT - keyword used to eliminate duplicate tuples from the result of a SQL query.
+
+In general, a query with SELECT 
+DISTINCT eliminates duplicates, whereas a query with SELECT ALL does not.
+
+SELECT = SELECT ALL (quiz question)*
+
+Set Operations:
+
+UNION
+EXCEPT
+INTERCEPT
+
+- The relations resulting from these set operations are sets of tuples; that is, duplicate 
+tuples are eliminated from the result. These set operations apply only to typecompatible relations, so we must make sure that the two relations on which we apply 
+the operation have the same attributes and that the attributes appear in the same 
+order in both relations.
+
+6.3.5 Substring Pattern Matching and Arithmetic Operators
+LIKE - comparison operator.
+used for string pattern matching.
+
+% replaces an arbitrary number of zero or more 
+characters, and the underscore (_) replaces a single character (quiz question)*
+
+ESCAPE:
+a literal character in the string, the character 
+should be preceded by an escape character
+
+Another feature allows the use of arithmetic in queries. The standard arithmetic 
+operators for addition (+), subtraction (−), multiplication (*), and division (/) can 
+be applied to numeric values or attributes with numeric domains.
+
+For string data types, the concatenate operator || can be used in a query to append 
+two string values.
+
+Another comparison operator, which can be used 
+for convenience, is BETWEEN.
+
+6.3.6 Ordering of Query Results
+ORDER BY CLAUSE - SQL allows the user to order the tuples in the result of a query by the values of one 
+or more of the attributes that appear in the query result
+
+The default order is in ascending order of values. We can specify the keyword DESC
+if we want to see the result in a descending order of values. The keyword ASC can be 
+used to specify ascending order explicitly. For example, if we want descending 
+alphabetical order on Dname and ascending order on Lname, Fname, the ORDER BY
+clause of Q15 can be written as
+ORDER BY D.Dname DESC, E.Lname ASC, E.Fname ASC
+
+6.3.7 Discussion and Summary of 
+Basic SQL Retrieval Queries
+
+Updated anatomy of the SQL Query:
+
+SELECT <attribute list>
+FROM <table list>
+[ WHERE <condition> ]
+[ ORDER BY <attribute list> ];
+
+6.4 INSERT, DELETE, and UPDATE 
+Statements in SQL
+
+6.4.1 The INSERT Command
+
+INSERT - most simple used to add a single tuple (row) to a relation (table).
+
+We must specify the relation name and a list of values for the tuple.
+
+The values 
+should be listed in the same order in which the corresponding attributes were specified in the CREATE TABLE command. For example, to add a new tuple to the 
+EMPLOYEE relation shown in Figure 5.5 and specified in the CREATE TABLE 
+EMPLOYEE … command in Figure 6.1, we can use U1:
+
+U1: INSERT INTO EMPLOYEE
+VALUES ( ‘Richard’, ‘K’, ‘Marini’, ‘653298653’, ‘1962-12-30’, ‘98 
+Oak Forest, Katy, TX’, ‘M’, 37000, ‘653298653’, 4 );
+
+A second form of the INSERT statement allows the user to specify explicit attribute 
+names that correspond to the values provided in the INSERT command.
+
+However, the values must include all attributes with NOT 
+NULL specification and no default value. Attributes with NULL allowed or DEFAULT
+values are the ones that can be left out. 
+
+U1A: INSERT INTO EMPLOYEE (Fname, Lname, Dno, Ssn)
+VALUES (‘Richard’, ‘Marini’, 4, ‘653298653’);
+
+Attributes not specified in U1A are set to their DEFAULT or to NULL
+
+Inserting Multiple Tuples (From Query, or Explicitly):
+
+U3B: INSERT INTO WORKS_ON_INFO ( Emp_name, Proj_name, 
+Hours_per_week )
+SELECT E.Lname, P.Pname, W.Hours
+FROM PROJECT P, WORKS_ON W, EMPLOYEE E
+WHERE P.Pnumber = W.Pno AND W.Essn = E.Ssn;
+
+6.4.2 The DELETE Command
+
+The DELETE command removes tuples from a relation. It includes a WHERE
+clause, similar to that used in an SQL query, to select the tuples to be deleted. 
+Tuples are explicitly deleted from only one table at a time. However, the deletion 
+may propagate to tuples in other relations if referential triggered actions are specified in the referential integrity constraints of the DDL (see Section 6.2.2).
+
+zero, one, or many tuples may be deleted by a single DELETE command (quiz question)*
+depending on the evaluation of the WHERE condition.
+
+If no WHERE condition is supplied, all the tuples from the relation will be deleted, but the table will still exist.  You must drop the table to remove it from the schema.
+
+i.e.
+U4A: DELETE FROM EMPLOYEE 
+WHERE Lname = ‘Brown’;
+
+6.4.3 The UPDATE Command
+The UPDATE command is used to modify attribute values of one or more selected 
+tuples. 
+
+a WHERE clause in the UPDATE command 
+selects the tuples to be modified from a single relation. However, updating a primary key value may propagate to the foreign key values of tuples in other relations if such a referential triggered action is specified in the referential integrity constraints of the DDL (see Section 6.2.2). 
+
+SET clause in the 
+UPDATE command specifies the attributes to be modified and their new values.
+
+Several tuples can be modified with a single UPDATE command.
+
+In the SET
+clause, the reference to the Salary attribute on the right refers to the old Salary
+value before modification, and the one on the left refers to the new Salary value 
+after modification:
+U6: UPDATE EMPLOYEE
+SET Salary = Salary * 1.1
+WHERE Dno = 5;
+
+It is also possible to specify NULL or DEFAULT as the new attribute value. Notice that 
+each UPDATE command explicitly refers to a single relation only. To modify multiple relations, we must issue several UPDATE commands.
