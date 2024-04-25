@@ -1,4 +1,4 @@
-7.1 More Complex SQL Retrieval Queries
+7 .1 More Complex SQL Retrieval Queries
 
 7.1.1 Comparisons Involving NULL and Three-Valued Logic
 
